@@ -1,36 +1,48 @@
 package org.example.botserver.models;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.List;
+
 
 @Data
 @Entity
-@Table(name = "order_items")
+@Table(name = "orders")
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class OrderItems {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "quantity")
-    private Long quantity;
+    @OneToMany
+    @JoinColumn(name = "order_items")
+    private List<OrderItems> orderItems;
+
+    @Column(name = "date")
+    private LocalDate date;
+
+    @Column(name = "status")
+    private String status;
 
 }
