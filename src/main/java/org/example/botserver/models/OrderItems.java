@@ -1,5 +1,6 @@
 package org.example.botserver.models;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,38 +13,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
-
 
 @Data
 @Entity
 @Table(name = "products")
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Product {
+public class OrderItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "price")
-    private BigDecimal price;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "quantity")
     private Long quantity;
-
-    @Column(name = "weight")
-    private BigDecimal weight;
-
-    @Column(name = "picture")
-    private String picture;
-
-    @OneToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
 
 }
